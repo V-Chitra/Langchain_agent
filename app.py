@@ -56,7 +56,7 @@ add_routes(
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="localhost", port=8080)
+    uvicorn.run(app, port=8080, reload=True)
 #app = Flask(__name__)
 
 #if __name__ == "__main__":
