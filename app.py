@@ -41,7 +41,7 @@ chain = prompt_template | model | parser
 
 app = Flask(__name__)
 
-@app.route("/predict", methods['GET'])
+@app.route("/predict", methods=['GET'])
 def run():
     if request.method == "GET":
         text = request.args.get("text")
