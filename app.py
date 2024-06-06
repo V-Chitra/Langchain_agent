@@ -3,6 +3,7 @@ LOCATION = "us-central1"  # @param {type:"string"}
 STAGING_BUCKET = "gs://grcv-bucket"  # @param {type:"string"}
 
 import vertexai
+from flask import Flask, render_template, request, jsonify
 vertexai.init(project=PROJECT_ID, location=LOCATION, staging_bucket=STAGING_BUCKET)
 
 import getpass
@@ -38,26 +39,34 @@ parser = StrOutputParser()
 # 4. Create chain
 chain = prompt_template | model | parser
 
+app = Flask(__name__)
 
-# 4. App definition
-app = FastAPI(
-  title="LangChain Server",
-  version="1.0",
-  description="A simple API server using LangChain's Runnable interfaces",
-)
+@app.route("/predict", methods['GET'])
+def run():
+    if request.method == "GET":
+        text = request.args.get("text")
+    result = chain.invoke({"language": 'french', "text":text})
+    return jsonify(result)
 
-# 5. Adding chain route
+# # 4. App definition
+# app = FastAPI(
+#   title="LangChain Server",
+#   version="1.0",
+#   description="A simple API server using LangChain's Runnable interfaces",
+# )
 
-add_routes(
-    app,
-    chain,
-    path="/chain",
-)
-if __name__ == "__main__":
-    import uvicorn
+# # 5. Adding chain route
 
-    uvicorn.run(app, port=8080, reload=True)
+# add_routes(
+#     app,
+#     chain,
+#     path="/chain",
+# )
+# if __name__ == "__main__":
+    # import uvicorn
+
+    # uvicorn.run(app, port=8080, reload=True)
 #app = Flask(__name__)
 
-#if __name__ == "__main__":
-#    app.run(port=8080, host='0.0.0.0', debug=True)
+if __name__ == "__main__":
+   app.run(port=8080, host='0.0.0.0', debug=True)
