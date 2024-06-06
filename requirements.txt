@@ -9,4 +9,5 @@ langserve
 typer
 sse_starlette
 flask
+uvicorn
 requests==2.31.0
