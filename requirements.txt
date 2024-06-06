@@ -8,4 +8,5 @@ langchain_core
 langserve
 typer
 sse_starlette
+flask
 requests==2.31.0
