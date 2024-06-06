@@ -7,4 +7,4 @@ COPY . ./
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "-m", "uvicorn", "main:app", "--reload"]
+CMD ["python", "app.py"]
