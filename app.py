@@ -20,6 +20,7 @@ from fastapi import FastAPI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langserve import add_routes
+from flask import Flask, request
 
 # 1. Create prompt template
 system_template = "Translate the following into {language}:"
@@ -53,7 +54,7 @@ add_routes(
     path="/chain",
 )
 
-if __name__ == "__main__":
-    import uvicorn
+app = Flask(__name__)
 
-    uvicorn.run(app, host="localhost", port=8080)
+if __name__ == "__main__":
+    app.run(port=8080, host='0.0.0.0', debug=True)
